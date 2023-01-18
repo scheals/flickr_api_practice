@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
     flickr = Flickr.new
 
     begin
-      photos = flickr.people.getPhotos(user_id: @user_id, per_page: 30)
+      photos = flickr.people.getPublicPhotos(user_id: @user_id, per_page: 30)
     rescue StandardError => e
       flash.now[:error] = 'Could not find a user with given ID!'
       render :index, status: :unprocessable_entity
