@@ -2,11 +2,19 @@ require 'flickr'
 
 class StaticPagesController < ApplicationController
   def index
-    @flickr_id = params[:user_id]
-    return unless @flickr_id
+    @user_id = params[:user_id]
+    return unless @user_id
 
     flickr = Flickr.new
-    photos = flickr.people.getPhotos(user_id: @flickr_id, per_page: 30)
+
+    begin
+      photos = flickr.people.getPhotos(user_id: @user_id, per_page: 30)
+    rescue StandardError => e
+      flash.now[:error] = 'Could not find a user with given ID!'
+      render :index, status: :unprocessable_entity
+      return
+    end
+
     @photo_urls = photos.map { |photo| Flickr.url(photo) }
   end
 end
