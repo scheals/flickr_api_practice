@@ -1,0 +1,15 @@
+<h1>Another Flickr Photo Getter</h1>
+<%= form_tag '/', method: :get do %>
+  <div><%= label_tag 'user_id', "User's ID" %></div>
+  <div><%= text_field_tag 'user_id' %></div>
+  <div><%= submit_tag 'Find pictures!' %></div>
+<% end %>
+<% if @photo_urls %>
+  <% @photo_urls.each_with_index do |url, i| %>
+    <p>Photo <%= i + 1 %>:</p>
+    <img src="<%=url%>" alt="A photo from Flickrs">
+  <% end %>
+<% end %>
+
+
+<footer>This product uses the Flickr API but is not endorsed or certified by SmugMug, Inc.</footer>
